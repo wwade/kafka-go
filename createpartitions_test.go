@@ -21,7 +21,7 @@ func TestClientCreatePartitions(t *testing.T) {
 				Count: 2,
 				TopicPartitionAssignments: []TopicPartitionAssignment{
 					TopicPartitionAssignment{
-						BrokerIDs: []int32{0},
+						BrokerIDs: []int32{1},
 					},
 				},
 			},
