@@ -4,10 +4,14 @@ import (
 	"context"
 	"testing"
 
+	ktesting "github.com/segmentio/kafka-go/testing"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestClientDescribeConfigs(t *testing.T) {
+	if !ktesting.KafkaIsAtLeast("0.11.0") {
+		return
+	}
 
 	const (
 		MaxMessageBytes      = "max.message.bytes"
