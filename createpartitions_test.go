@@ -3,9 +3,14 @@ package kafka
 import (
 	"context"
 	"testing"
+
+	ktesting "github.com/segmentio/kafka-go/testing"
 )
 
 func TestClientCreatePartitions(t *testing.T) {
+	if !ktesting.KafkaIsAtLeast("1.0.1") {
+		return
+	}
 
 	client, shutdown := newLocalClient()
 	defer shutdown()
