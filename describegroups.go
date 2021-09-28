@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/segmentio/kafka-go/protocol/describegroups"
+	"github.com/wwade/kafka-go/protocol/describegroups"
 )
 
 // DescribeGroupsRequest is a request to the DescribeGroups API.

@@ -1,6 +1,6 @@
 package alterconfigs
 
-import "github.com/segmentio/kafka-go/protocol"
+import "github.com/wwade/kafka-go/protocol"
 
 func init() {
 	protocol.Register(&Request{}, &Response{})

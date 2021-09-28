@@ -8,8 +8,8 @@ import (
 	"net"
 	"time"
 
-	"github.com/segmentio/kafka-go/protocol"
-	produceAPI "github.com/segmentio/kafka-go/protocol/produce"
+	"github.com/wwade/kafka-go/protocol"
+	produceAPI "github.com/wwade/kafka-go/protocol/produce"
 )
 
 type RequiredAcks int
