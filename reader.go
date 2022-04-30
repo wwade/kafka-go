@@ -1204,6 +1204,7 @@ func (r *Reader) start(offsetsByPartition map[topicPartition]int64) {
 				backoffDelayMin: r.config.ReadBackoffMin,
 				backoffDelayMax: r.config.ReadBackoffMax,
 				version:         r.version,
+				commits:         r.commits,
 				msgs:            r.msgs,
 				stats:           r.stats,
 				isolationLevel:  r.config.IsolationLevel,
@@ -1229,6 +1230,7 @@ type reader struct {
 	backoffDelayMin time.Duration
 	backoffDelayMax time.Duration
 	version         int64
+	commits         chan commitRequest
 	msgs            chan<- readerMessage
 	stats           *readerStats
 	isolationLevel  IsolationLevel
@@ -1440,6 +1442,17 @@ func (r *reader) initialize(ctx context.Context, offset int64) (conn *Conn, star
 		case offset < first:
 			offset = first
 		}
+
+		creq := commitRequest{
+			commits: []commit{{topic: r.topic, partition: r.partition, offset: offset}},
+			errch:   make(chan error, 1),
+		}
+		creq.commits = append(creq.commits, commit{})
+
+		r.withLogger(func(l Logger) {
+			l.Printf("commit initial reader offset: %+v", creq.commits)
+		})
+		r.commits <- creq
 
 		r.withLogger(func(log Logger) {
 			log.Printf("the kafka reader for partition %d of %s is seeking to offset %d", r.partition, r.topic, offset)
